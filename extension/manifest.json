@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "MoneyVibe Shopping Tracker",
+  "version": "1.0.0",
+  "description": "Tu dong ghi nhan chi tieu mua sam truc tuyen vao ung dung MoneyVibe",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://shopee.vn/*",
+    "https://tiki.vn/*",
+    "https://www.lazada.vn/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MoneyVibe Extension"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

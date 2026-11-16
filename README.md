@@ -49,8 +49,13 @@ Chuoi series gom 35 bai viet chuyen sau. Duoi day la danh muc doi chieu chi tiet
 | **Bai 21** | An ninh Prompt Injection & XML Delimiter Defense | `src/services/securitySanitizer.ts` |
 | **Bai 22** | Quan tri State ben vung voi Zustand & TanStack Query | `src/store/useTransactionStore.ts` |
 | **Bai 23** | Multi-LLM Fallback Engine (Gemini, Claude, GPT) | `src/services/multiLlmFallback.ts`, `src/components/AIAdvisorCard.tsx` |
+| **Bai 24** | Dua ung dung len App Store & Google Play voi Capacitor | `capacitor.config.ts` |
+| **Bai 25** | Extension trinh duyet tu dong ghi nhan chi tieu mua sam | `extension/manifest.json`, `extension/background.js` |
+| **Bai 26** | He thong thong bao day (Push Notifications) nhac nho & canh bao | `src/services/notificationService.ts` |
+| **Bai 27** | Quoc te hoa (i18n), da ngon ngu & quy doi ty gia hoi doai | `src/services/i18nService.ts` |
+| **Bai 28** | He thong thu phi dinh ky toan cau Stripe & Lemon Squeezy | `src/services/subscriptionService.ts`, `supabase/functions/stripe-webhook/index.ts` |
 
-*Ghi chu: Cac bai tiep theo tu Bai 24 den Bai 35 (Capacitor Mobile, Extension, Autonomous Agents, RAG, AIOps) se tiep tuc duoc cap nhat vao repository nay theo tien do xuat ban.*
+*Ghi chu: Cac bai tiep theo tu Bai 29 den Bai 35 (Autonomous Agents, RAG, AIOps, API Public) se tiep tuc duoc cap nhat vao repository nay theo tien do xuat ban.*
 
 ---
 
