@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Camera, FileText, Check } from 'lucide-react';
+import { Camera, Check } from 'lucide-react';
 import { OCRScannerService } from '../services/ocrScanner';
 import { useTransactionStore } from '../store/useTransactionStore';
 

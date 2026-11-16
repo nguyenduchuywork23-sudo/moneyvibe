@@ -4,7 +4,7 @@ import { OCRBillResult } from '../types';
  * Bai 7: "Mat Than" OCR - Quet hoa don tu dong
  */
 export class OCRScannerService {
-  public static async scanReceiptImage(file: File): Promise<OCRBillResult> {
+  public static async scanReceiptImage(_file: File): Promise<OCRBillResult> {
     // Gia lap tien trinh OCR tien tien ho tro Multimodal AI
     return new Promise((resolve) => {
       setTimeout(() => {

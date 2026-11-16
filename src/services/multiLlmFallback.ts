@@ -56,7 +56,7 @@ export class MultiLLMFallbackService {
     }
   }
 
-  private static async callGemini(prompt: string, income: number, spent: number, budget: number): Promise<AIAdviceResult> {
+  private static async callGemini(prompt: string, _income: number, _spent: number, _budget: number): Promise<AIAdviceResult> {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
     if (!apiKey) throw new Error('VITE_GEMINI_API_KEY missing');
 
@@ -88,7 +88,7 @@ export class MultiLLMFallbackService {
     };
   }
 
-  private static async callAnthropic(prompt: string, income: number, spent: number, budget: number): Promise<AIAdviceResult> {
+  private static async callAnthropic(_prompt: string, _income: number, spent: number, budget: number): Promise<AIAdviceResult> {
     const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
     if (!apiKey) throw new Error('VITE_ANTHROPIC_API_KEY missing');
 
@@ -105,7 +105,7 @@ export class MultiLLMFallbackService {
     };
   }
 
-  private static async callOpenAI(prompt: string, income: number, spent: number, budget: number): Promise<AIAdviceResult> {
+  private static async callOpenAI(_prompt: string, _income: number, spent: number, budget: number): Promise<AIAdviceResult> {
     const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
     if (!apiKey) throw new Error('VITE_OPENAI_API_KEY missing');
 
@@ -122,7 +122,7 @@ export class MultiLLMFallbackService {
     };
   }
 
-  private static localHeuristicFallback(income: number, spent: number, budget: number): AIAdviceResult {
+  private static localHeuristicFallback(_income: number, spent: number, budget: number): AIAdviceResult {
     const ratio = budget > 0 ? (spent / budget) : 0;
     const score = Math.max(10, Math.min(100, Math.round((1 - ratio) * 100)));
 

@@ -9,7 +9,7 @@ import { OCRBillScanner } from './components/OCRBillScanner';
 import { AdminDashboard } from './components/AdminDashboard';
 import { OfflineSyncBanner } from './components/OfflineSyncBanner';
 import { ExportService } from './services/exportService';
-import { LayoutDashboard, Receipt, Bot, Shield, FileDown, Layers } from 'lucide-react';
+import { LayoutDashboard, Receipt, Bot, Shield, FileDown } from 'lucide-react';
 
 export const App: React.FC = () => {
   const { loadTransactions, transactions } = useTransactionStore();
@@ -58,11 +58,10 @@ export const App: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 flex gap-6 text-xs font-semibold border-t border-slate-100">
           <button
             onClick={() => setActiveTab('dashboard')}
-            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${
-              activeTab === 'dashboard'
-                ? 'border-emerald-600 text-emerald-600'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
+            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${activeTab === 'dashboard'
+              ? 'border-emerald-600 text-emerald-600'
+              : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
           >
             <LayoutDashboard className="w-4 h-4" />
             Tong Quan
@@ -70,11 +69,10 @@ export const App: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('transactions')}
-            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${
-              activeTab === 'transactions'
-                ? 'border-emerald-600 text-emerald-600'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
+            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${activeTab === 'transactions'
+              ? 'border-emerald-600 text-emerald-600'
+              : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
           >
             <Receipt className="w-4 h-4" />
             Giao Dich & Nhap Lieu
@@ -82,11 +80,10 @@ export const App: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('ai')}
-            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${
-              activeTab === 'ai'
-                ? 'border-emerald-600 text-emerald-600'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
+            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${activeTab === 'ai'
+              ? 'border-emerald-600 text-emerald-600'
+              : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
           >
             <Bot className="w-4 h-4" />
             Co Van AI (Multi-LLM)
@@ -94,11 +91,10 @@ export const App: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('admin')}
-            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${
-              activeTab === 'admin'
-                ? 'border-emerald-600 text-emerald-600'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
+            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${activeTab === 'admin'
+              ? 'border-emerald-600 text-emerald-600'
+              : 'border-transparent text-slate-500 hover:text-slate-800'
+              }`}
           >
             <Shield className="w-4 h-4" />
             Quan Tri & He Thong

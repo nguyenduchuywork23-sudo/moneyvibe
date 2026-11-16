@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTransactionStore } from '../store/useTransactionStore';
-import { ArrowUpRight, ArrowDownRight, Wallet, Activity, Calendar, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, Wallet, ShieldCheck } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
   const { getFinancialMetrics, monthlyBudget } = useTransactionStore();
@@ -92,13 +92,12 @@ export const Dashboard: React.FC = () => {
 
         <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
           <div
-            className={`h-full transition-all duration-500 ${
-              budgetProgress >= 100
-                ? 'bg-rose-500'
-                : budgetProgress >= 80
+            className={`h-full transition-all duration-500 ${budgetProgress >= 100
+              ? 'bg-rose-500'
+              : budgetProgress >= 80
                 ? 'bg-amber-500'
                 : 'bg-emerald-500'
-            }`}
+              }`}
             style={{ width: `${Math.min(100, budgetProgress)}%` }}
           />
         </div>

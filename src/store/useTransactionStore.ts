@@ -134,7 +134,6 @@ export const useTransactionStore = create<State>((set, get) => ({
       .reduce((acc, t) => acc + t.amount, 0);
 
     const netBalance = totalIncome - totalExpense;
-    const daysInMonth = 30;
     const burnRatePerDay = totalExpense / Math.max(1, new Date().getDate());
     const runwayDays = burnRatePerDay > 0 ? Math.floor(Math.max(0, netBalance) / burnRatePerDay) : 999;
 

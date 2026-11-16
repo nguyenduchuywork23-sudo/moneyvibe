@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, ShieldAlert, Cpu, Server } from 'lucide-react';
+import { Server } from 'lucide-react';
 
 export const AdminDashboard: React.FC = () => {
   return (
