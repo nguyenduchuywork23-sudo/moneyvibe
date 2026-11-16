@@ -23,9 +23,9 @@ export const OfflineSyncBanner: React.FC = () => {
     <div className="bg-amber-500 text-white px-4 py-2 text-xs font-medium flex items-center justify-between">
       <div className="flex items-center gap-2">
         <WifiOff className="w-4 h-4" />
-        <span>Ban dang o che do Ngoai tuyen (Offline). Du lieu duoc luu tai Dexie IndexedDB va se tu dong dong bo khi co mang.</span>
+        <span>Bạn đang ở chế độ Ngoại tuyến (Offline). Dữ liệu được lưu tại Dexie IndexedDB và sẽ tự động đồng bộ khi có mạng.</span>
       </div>
-      <span className="text-[11px] underline">Bai 16: Offline-First</span>
+      <span className="text-[11px] underline">Bài 16: Offline-First</span>
     </div>
   );
 };

@@ -29,7 +29,7 @@ export const OCRBillScanner: React.FC = () => {
       amount: scannedBill.totalAmount,
       type: 'expense',
       category: scannedBill.suggestedCategory,
-      note: `OCR Hoa Don: ${scannedBill.merchantName}`,
+      note: `Hóa đơn: ${scannedBill.merchantName}`,
       date: scannedBill.date,
     });
     setScannedBill(null);
@@ -40,10 +40,10 @@ export const OCRBillScanner: React.FC = () => {
       <div className="flex items-center justify-between">
         <h4 className="text-sm font-semibold text-slate-800 flex items-center gap-2">
           <Camera className="w-4 h-4 text-emerald-600" />
-          Mat Than OCR: Quet Hoa Don Tu Dong (Bai 7)
+          Mắt Thần OCR: Quét Hóa Đơn Tự Động (Bài 7)
         </h4>
         <label className="cursor-pointer px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition">
-          {loading ? 'Dang quet anh...' : 'Tai Anh Hoa Don'}
+          {loading ? 'Đang quét ảnh...' : 'Tải Ảnh Hóa Đơn'}
           <input type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
         </label>
       </div>
@@ -70,7 +70,7 @@ export const OCRBillScanner: React.FC = () => {
             onClick={handleConfirmAdd}
             className="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg transition flex items-center justify-center gap-1.5"
           >
-            <Check className="w-4 h-4" /> Xac Nhan Ghi So Tu Dong
+            <Check className="w-4 h-4" /> Xác Nhận Ghi Sổ Tự Động
           </button>
         </div>
       )}

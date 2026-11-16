@@ -1,16 +1,16 @@
 export type TransactionType = 'income' | 'expense';
 
 export type Category = 
-  | 'An uong'
-  | 'Di lai'
-  | 'Nha o'
-  | 'Hoa don & Tien ich'
-  | 'Giai tri'
-  | 'Suc khoe'
-  | 'Mua sam'
-  | 'Dau tu'
-  | 'Luong thuong'
-  | 'Khac';
+  | 'Ăn uống'
+  | 'Đi lại'
+  | 'Nhà ở'
+  | 'Hóa đơn & Tiện ích'
+  | 'Giải trí'
+  | 'Sức khỏe'
+  | 'Mua sắm'
+  | 'Đầu tư'
+  | 'Lương thưởng'
+  | 'Khác';
 
 export interface Transaction {
   id: string;

@@ -6,7 +6,7 @@ export const TransactionList: React.FC = () => {
   const { transactions, deleteTransaction, activeFilterCategory, searchKeyword } = useTransactionStore();
 
   const filtered = transactions.filter((t) => {
-    if (activeFilterCategory !== 'Tat ca' && t.category !== activeFilterCategory) return false;
+    if (activeFilterCategory !== 'Tất cả' && t.category !== activeFilterCategory) return false;
     if (searchKeyword && !t.note.toLowerCase().includes(searchKeyword.toLowerCase())) return false;
     return true;
   });
@@ -14,13 +14,13 @@ export const TransactionList: React.FC = () => {
   return (
     <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
       <div className="p-4 border-b border-slate-100 flex items-center justify-between">
-        <h3 className="text-base font-semibold text-slate-800">Lich Su Giao Dich ({filtered.length})</h3>
-        <span className="text-xs text-slate-400">Offline-first IndexedDB cache</span>
+        <h3 className="text-base font-semibold text-slate-800">Lịch Sử Giao Dịch ({filtered.length})</h3>
+        <span className="text-xs text-slate-400">Bộ nhớ ngoại tuyến Dexie IndexedDB</span>
       </div>
 
       {filtered.length === 0 ? (
         <div className="p-8 text-center text-slate-400 text-sm">
-          Chua co ban ghi giao dich nao phu hop.
+          Chưa có bản ghi giao dịch nào phù hợp.
         </div>
       ) : (
         <div className="divide-y divide-slate-100">
@@ -56,17 +56,17 @@ export const TransactionList: React.FC = () => {
                   <div className="flex items-center justify-end gap-1 text-[11px] text-slate-400">
                     {t.syncStatus === 'synced' && (
                       <span className="text-emerald-600 flex items-center gap-0.5">
-                        <CheckCircle2 className="w-3 h-3" /> Dong bo
+                        <CheckCircle2 className="w-3 h-3" /> Đã đồng bộ
                       </span>
                     )}
                     {t.syncStatus === 'pending' && (
                       <span className="text-amber-500 flex items-center gap-0.5">
-                        <Clock className="w-3 h-3" /> Cho dong bo
+                        <Clock className="w-3 h-3" /> Chờ đồng bộ
                       </span>
                     )}
                     {t.syncStatus === 'failed' && (
                       <span className="text-rose-500 flex items-center gap-0.5">
-                        <AlertTriangle className="w-3 h-3" /> Loi
+                        <AlertTriangle className="w-3 h-3" /> Lỗi đồng bộ
                       </span>
                     )}
                   </div>
@@ -75,7 +75,7 @@ export const TransactionList: React.FC = () => {
                 <button
                   onClick={() => deleteTransaction(t.id)}
                   className="p-1.5 text-slate-400 hover:text-rose-600 rounded-md hover:bg-rose-50 transition"
-                  title="Xoa giao dich"
+                  title="Xóa giao dịch"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>

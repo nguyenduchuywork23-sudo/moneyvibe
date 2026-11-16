@@ -23,7 +23,7 @@ export const App: React.FC = () => {
     <div className="min-h-screen bg-slate-50 flex flex-col">
       <OfflineSyncBanner />
 
-      {/* Header */}
+      {/* Đầu trang (Header) */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -32,7 +32,7 @@ export const App: React.FC = () => {
             </div>
             <div>
               <div className="font-bold text-slate-800 text-lg leading-tight">MoneyVibe</div>
-              <div className="text-[11px] text-slate-400">Chuoi Bai Giang Vibe Coding Tu Con So 0</div>
+              <div className="text-[11px] text-slate-400">Chuỗi Bài Giảng Vibe Coding Từ Con Số 0</div>
             </div>
           </div>
 
@@ -42,67 +42,71 @@ export const App: React.FC = () => {
               className="flex items-center gap-1.5 px-3 py-1.5 border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg transition"
             >
               <FileDown className="w-3.5 h-3.5 text-emerald-600" />
-              Excel
+              Xuất Excel
             </button>
             <button
               onClick={() => ExportService.exportToPDF(transactions)}
               className="flex items-center gap-1.5 px-3 py-1.5 border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg transition"
             >
               <FileDown className="w-3.5 h-3.5 text-rose-600" />
-              PDF
+              Xuất PDF
             </button>
           </div>
         </div>
 
-        {/* Tab Navigation */}
+        {/* Thanh Điều Hướng Tab */}
         <div className="max-w-6xl mx-auto px-4 flex gap-6 text-xs font-semibold border-t border-slate-100">
           <button
             onClick={() => setActiveTab('dashboard')}
-            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${activeTab === 'dashboard'
-              ? 'border-emerald-600 text-emerald-600'
-              : 'border-transparent text-slate-500 hover:text-slate-800'
-              }`}
+            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${
+              activeTab === 'dashboard'
+                ? 'border-emerald-600 text-emerald-600'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
           >
             <LayoutDashboard className="w-4 h-4" />
-            Tong Quan
+            Tổng Quan
           </button>
 
           <button
             onClick={() => setActiveTab('transactions')}
-            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${activeTab === 'transactions'
-              ? 'border-emerald-600 text-emerald-600'
-              : 'border-transparent text-slate-500 hover:text-slate-800'
-              }`}
+            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${
+              activeTab === 'transactions'
+                ? 'border-emerald-600 text-emerald-600'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
           >
             <Receipt className="w-4 h-4" />
-            Giao Dich & Nhap Lieu
+            Giao Dịch & Nhập Liệu
           </button>
 
           <button
             onClick={() => setActiveTab('ai')}
-            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${activeTab === 'ai'
-              ? 'border-emerald-600 text-emerald-600'
-              : 'border-transparent text-slate-500 hover:text-slate-800'
-              }`}
+            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${
+              activeTab === 'ai'
+                ? 'border-emerald-600 text-emerald-600'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
           >
             <Bot className="w-4 h-4" />
-            Co Van AI (Multi-LLM)
+            Cố Vấn AI (Multi-LLM)
           </button>
 
           <button
             onClick={() => setActiveTab('admin')}
-            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${activeTab === 'admin'
-              ? 'border-emerald-600 text-emerald-600'
-              : 'border-transparent text-slate-500 hover:text-slate-800'
-              }`}
+            className={`py-3 flex items-center gap-1.5 border-b-2 transition ${
+              activeTab === 'admin'
+                ? 'border-emerald-600 text-emerald-600'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
           >
             <Shield className="w-4 h-4" />
-            Quan Tri & He Thong
+            Quản Trị & Hệ Thống
           </button>
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* Nội Dung Chính */}
       <main className="max-w-6xl mx-auto px-4 py-6 flex-1 w-full space-y-6">
         {activeTab === 'dashboard' && (
           <>
@@ -137,10 +141,10 @@ export const App: React.FC = () => {
         {activeTab === 'admin' && <AdminDashboard />}
       </main>
 
-      {/* Footer */}
+      {/* Chân trang (Footer) */}
       <footer className="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500">
-        <p className="font-semibold text-slate-700">MoneyVibe - Du An Mau Series "Vibe Coding Tu Con So 0"</p>
-        <p className="mt-1">Tac gia: Nguyen Duc Huy | Kenh Substack: nguynchuy1.substack.com</p>
+        <p className="font-semibold text-slate-700">MoneyVibe — Dự Án Thực Hành Series "Vibe Coding Từ Con Số 0"</p>
+        <p className="mt-1">Tác giả: Nguyễn Đức Huy | Kênh Substack: nguynchuy1.substack.com</p>
       </footer>
     </div>
   );

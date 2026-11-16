@@ -3,8 +3,8 @@ import { SecuritySanitizer } from './securitySanitizer';
 import { SemanticCacheManager } from './semanticCache';
 
 /**
- * Bai 23: Multi-LLM Fallback Architecture
- * Thu tu chuyen mach: Gemini 1.5 Pro -> Anthropic Claude 3.5 Sonnet -> OpenAI GPT-4o-mini
+ * Bài 23: Kiến trúc Multi-LLM Fallback tự động chuyển mạch dự phòng
+ * Thứ tự ưu tiên: Gemini 1.5 Flash -> Anthropic Claude 3.5 Sonnet -> OpenAI GPT-4o-mini -> Heuristic Cục Bộ
  */
 export class MultiLLMFallbackService {
   public static async analyzeFinances(transactions: Transaction[], monthlyBudget: number): Promise<AIAdviceResult> {
@@ -21,44 +21,44 @@ export class MultiLLMFallbackService {
 
     const prompt = SecuritySanitizer.wrapWithXMLTags('financial_context', contextPayload);
 
-    // Kiem tra cache truoc (Bai 20)
+    // Kiểm tra bộ nhớ đệm ngữ nghĩa Semantic Cache (Bài 20)
     const cached = SemanticCacheManager.get(prompt);
     if (cached) {
       return JSON.parse(cached);
     }
 
-    // Tier 1: Gemini
+    // Tầng 1: Gemini
     try {
       const result = await this.callGemini(prompt, totalIncome, totalSpent, monthlyBudget);
       SemanticCacheManager.set(prompt, JSON.stringify(result));
       return result;
     } catch (err) {
-      console.warn('Gemini primary endpoint failed, falling back to Anthropic Claude...', err);
+      console.warn('Gemini gặp sự cố, tự động chuyển mạch sang Anthropic Claude...', err);
     }
 
-    // Tier 2: Anthropic
+    // Tầng 2: Anthropic Claude
     try {
       const result = await this.callAnthropic(prompt, totalIncome, totalSpent, monthlyBudget);
       SemanticCacheManager.set(prompt, JSON.stringify(result));
       return result;
     } catch (err) {
-      console.warn('Anthropic fallback failed, falling back to OpenAI...', err);
+      console.warn('Anthropic Claude gặp sự cố, tự động chuyển mạch sang OpenAI GPT...', err);
     }
 
-    // Tier 3: OpenAI
+    // Tầng 3: OpenAI GPT
     try {
       const result = await this.callOpenAI(prompt, totalIncome, totalSpent, monthlyBudget);
       SemanticCacheManager.set(prompt, JSON.stringify(result));
       return result;
     } catch (err) {
-      console.error('All LLM endpoints failed. Using local heuristic fallback engine.', err);
+      console.error('Tất cả các API ngoài gặp sự cố. Kích hoạt bộ xử lý phân tích ngoại tuyến cục bộ.', err);
       return this.localHeuristicFallback(totalIncome, totalSpent, monthlyBudget);
     }
   }
 
   private static async callGemini(prompt: string, _income: number, _spent: number, _budget: number): Promise<AIAdviceResult> {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-    if (!apiKey) throw new Error('VITE_GEMINI_API_KEY missing');
+    if (!apiKey) throw new Error('VITE_GEMINI_API_KEY chưa được cấu hình');
 
     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
@@ -66,13 +66,13 @@ export class MultiLLMFallbackService {
       body: JSON.stringify({
         contents: [{
           parts: [{
-            text: `Ban la chuyen gia phan tich tai chinh thong minh MoneyVibe. Hay phan tich va tra ve ket qua JSON gom cac truong: score (0-100), summary (string), actionableTips (string[]), riskAlert (string hoac null). Khong su dung emoji. Du lieu:\n${prompt}`
+            text: `Bạn là chuyên gia cố vấn tài chính thông minh MoneyVibe. Hãy phân tích và trả về kết quả dạng JSON gồm: score (0-100), summary (chuỗi nhận định), actionableTips (mảng các lời khuyên), riskAlert (cảnh báo hoặc null). Tuyệt đối không dùng emoji. Dữ liệu:\n${prompt}`
           }]
         }]
       })
     });
 
-    if (!res.ok) throw new Error(`Gemini HTTP error ${res.status}`);
+    if (!res.ok) throw new Error(`Lỗi kết nối Gemini HTTP ${res.status}`);
     const data = await res.json();
     const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
     const cleaned = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
@@ -81,8 +81,8 @@ export class MultiLLMFallbackService {
     return {
       provider: 'gemini',
       score: parsed.score || 75,
-      summary: parsed.summary || 'Chi tieu trong muc kiem soat on dinh.',
-      actionableTips: parsed.actionableTips || ['Duy tri quy du phong.', 'Theo doi hoa don co dinh.'],
+      summary: parsed.summary || 'Chi tiêu hiện tại đang nằm trong ngưỡng kiểm soát ổn định.',
+      actionableTips: parsed.actionableTips || ['Duy trì quỹ dự phòng khẩn cấp.', 'Theo dõi sát các hóa đơn cố định hàng tháng.'],
       riskAlert: parsed.riskAlert || null,
       generatedAt: new Date().toISOString(),
     };
@@ -90,34 +90,34 @@ export class MultiLLMFallbackService {
 
   private static async callAnthropic(_prompt: string, _income: number, spent: number, budget: number): Promise<AIAdviceResult> {
     const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
-    if (!apiKey) throw new Error('VITE_ANTHROPIC_API_KEY missing');
+    if (!apiKey) throw new Error('VITE_ANTHROPIC_API_KEY chưa được cấu hình');
 
     return {
       provider: 'anthropic',
       score: 78,
-      summary: 'He thong nhan dien ty le tiet kiem dat muc kha. Can toi uu nhom chi tieu bat buoc.',
+      summary: 'Hệ thống nhận diện tỷ lệ tiết kiệm đạt mức khá. Cần tối ưu thêm nhóm chi tiêu mua sắm.',
       actionableTips: [
-        'Cat giam 10% chi tieu giai tri va mua sam ngau hung.',
-        'Thiet lap han muc ngay cho cac khoan an uong ben ngoai.',
+        'Cắt giảm 10% các khoản chi ngẫu hứng không thiết yếu.',
+        'Thiết lập hạn mức chi tiêu theo ngày cho các bữa ăn bên ngoài.',
       ],
-      riskAlert: spent > budget ? 'Canh bao: Tong chi da vuot han muc ngan sach thang.' : null,
+      riskAlert: spent > budget ? 'Cảnh báo: Tổng chi tiêu đã vượt hạn mức ngân sách tháng.' : null,
       generatedAt: new Date().toISOString(),
     };
   }
 
   private static async callOpenAI(_prompt: string, _income: number, spent: number, budget: number): Promise<AIAdviceResult> {
     const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-    if (!apiKey) throw new Error('VITE_OPENAI_API_KEY missing');
+    if (!apiKey) throw new Error('VITE_OPENAI_API_KEY chưa được cấu hình');
 
     return {
       provider: 'openai',
       score: 72,
-      summary: 'Chi tieu co xu huong tang trong 7 ngay gan nhat.',
+      summary: 'Tốc độ chi tiêu có xu hướng gia tăng nhanh trong 7 ngày gần nhất.',
       actionableTips: [
-        'Kiem soat cac khoan chi nho le.',
-        'Tang cuong phan bo vao quy khan cap.',
+        'Rà soát và kiểm soát các khoản chi tiêu nhỏ lẻ hàng ngày.',
+        'Tăng cường trích lập vào quỹ tài chính khẩn cấp.',
       ],
-      riskAlert: spent > budget * 0.9 ? 'Ngan sach da su dung tren 90%.' : null,
+      riskAlert: spent > budget * 0.9 ? 'Ngân sách tháng đã sử dụng trên 90%.' : null,
       generatedAt: new Date().toISOString(),
     };
   }
@@ -129,12 +129,12 @@ export class MultiLLMFallbackService {
     return {
       provider: 'gemini',
       score,
-      summary: 'Phan tich ngoai tuyen: Ty le chi tieu hien tai chiem ' + Math.round(ratio * 100) + '% ngan sach.',
+      summary: `Phân tích ngoại tuyến: Tỷ lệ chi tiêu hiện tại chiếm ${Math.round(ratio * 100)}% hạn mức ngân sách.`,
       actionableTips: [
-        'Tiep tuc ghi chep day du moi giao dich phat sinh.',
-        'Uu tien thanh toan cac khoan hoa don thiet yeu dung han.',
+        'Tiếp tục ghi chép đầy đủ mọi khoản chi tiêu phát sinh mỗi ngày.',
+        'Ưu tiên thanh toán đúng hạn các hóa đơn tiện ích và sinh hoạt cố định.',
       ],
-      riskAlert: ratio >= 1 ? 'Tong chi tieu vuot qua nguong ngan sach thiet lap.' : null,
+      riskAlert: ratio >= 1 ? 'Tổng chi tiêu đã vượt qua ngưỡng ngân sách thiết lập.' : null,
       generatedAt: new Date().toISOString(),
     };
   }

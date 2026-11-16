@@ -4,7 +4,7 @@ import { useTransactionStore } from '../store/useTransactionStore';
 import { Category } from '../types';
 
 /**
- * Bai 5: Ghi chep chi tieu bang giong noi (Web Speech API)
+ * Bài 5: Ghi chép chi tiêu bằng giọng nói (Web Speech API)
  */
 export const VoiceExpenseInput: React.FC = () => {
   const [isListening, setIsListening] = useState(false);
@@ -15,7 +15,7 @@ export const VoiceExpenseInput: React.FC = () => {
     // @ts-ignore
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      alert('Trinh duyet cua ban chua ho tro Web Speech API.');
+      alert('Trình duyệt của bạn chưa hỗ trợ Web Speech API.');
       return;
     }
 
@@ -36,26 +36,25 @@ export const VoiceExpenseInput: React.FC = () => {
   };
 
   const parseAndSaveVoiceInput = async (rawText: string) => {
-    // Parser co ban trich xuat so tien va danh muc
-    const match = rawText.match(/(\d+)\s*(k|nghin|ngan|trieu)?/i);
+    const match = rawText.match(/(\d+)\s*(k|nghìn|ngàn|triệu)?/i);
     let amount = 50000;
     if (match) {
       let num = parseInt(match[1]);
       const unit = (match[2] || '').toLowerCase();
-      if (unit === 'k' || unit === 'nghin' || unit === 'ngan') num *= 1000;
-      if (unit === 'trieu') num *= 1000000;
+      if (unit === 'k' || unit === 'nghìn' || unit === 'ngàn') num *= 1000;
+      if (unit === 'triệu') num *= 1000000;
       amount = num;
     }
 
-    let category: Category = 'An uong';
-    if (rawText.toLowerCase().includes('xang') || rawText.toLowerCase().includes('xe')) category = 'Di lai';
-    if (rawText.toLowerCase().includes('thuoc') || rawText.toLowerCase().includes('kham')) category = 'Suc khoe';
+    let category: Category = 'Ăn uống';
+    if (rawText.toLowerCase().includes('xăng') || rawText.toLowerCase().includes('xe')) category = 'Đi lại';
+    if (rawText.toLowerCase().includes('thuốc') || rawText.toLowerCase().includes('khám')) category = 'Sức khỏe';
 
     await addTransaction({
       amount,
       type: 'expense',
       category,
-      note: `Ghi am: "${rawText}"`,
+      note: `Ghi âm: "${rawText}"`,
       date: new Date().toISOString().split('T')[0],
     });
   };
@@ -65,10 +64,10 @@ export const VoiceExpenseInput: React.FC = () => {
       <div>
         <h4 className="text-sm font-semibold text-slate-800 flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-emerald-600" />
-          Ghi Chuc Giao Dich Bang Giong Noi (Bai 5)
+          Ghi Chép Giao Dịch Bằng Giọng Nói (Bài 5)
         </h4>
         <p className="text-xs text-slate-500 mt-1">
-          {transcript ? `Da nhan dien: "${transcript}"` : 'Nhan giu de noi: "Chi 45 nghin an pho trua"'}
+          {transcript ? `Đã nhận diện: "${transcript}"` : 'Nhấn để nói: "Chi 45 nghìn ăn phở trưa"'}
         </p>
       </div>
 
